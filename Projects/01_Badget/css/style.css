@@ -3,9 +3,7 @@
    ========================================================= */
 
 :root {
-  /* Palette */
-  --color-white: #ffffff;
-
+  /* --- Palette ------------------------------------------- */
   --color-neutral-50: #f9fafb;
   --color-neutral-200: #e4e7ec;
   --color-neutral-700: #344054;
@@ -26,7 +24,10 @@
   --color-indigo-200: #c7d7fe;
   --color-indigo-700: #3538cd;
 
-  /* Typography */
+  /* --- Semantic ------------------------------------------ */
+  --color-background: #ffffff;
+
+  /* --- Typography ---------------------------------------- */
   --font-family-sans:
     'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica,
     Arial, sans-serif;
@@ -40,15 +41,14 @@
   --line-height-sm: 1.25rem; /* 20px */
   --line-height-md: 1.5rem; /* 24px */
 
-  /* Spacing */
+  /* --- Spacing ------------------------------------------- */
   --spacing-2xs: 0.125rem; /* 2px */
   --spacing-xs: 0.25rem; /* 4px */
   --spacing-sm: 0.5rem; /* 8px */
   --spacing-md: 0.75rem; /* 12px */
   --spacing-lg: 1rem; /* 16px */
-  --spacing-2xl: 2rem; /* 32px */
 
-  /* Radius */
+  /* --- Radius -------------------------------------------- */
   --radius-full: 9999px;
 }
 
@@ -64,20 +64,22 @@
 
 body {
   margin: 0;
-  background-color: var(--color-white);
+  background-color: var(--color-background);
   font-family: var(--font-family-sans);
 }
 
 /* =========================================================
    Badge
-   Variants only reassign the --badge-* custom properties;
-   the base rule is the single place that consumes them.
+
+   The base rule is the only place that consumes the
+   --badge-* properties; every variant does nothing but
+   reassign them. Declaration order matters: all defaults
+   are declared first, all overrides after.
    ========================================================= */
 
 .badge {
   display: inline-flex;
   align-items: center;
-  justify-content: center;
   padding: var(--badge-padding-y) var(--badge-padding-x);
   border: 1px solid var(--badge-border-color);
   border-radius: var(--radius-full);
@@ -89,7 +91,7 @@ body {
   white-space: nowrap;
 }
 
-/* --- Sizes (md is the default) --------------------------- */
+/* --- Defaults: size md, color neutral -------------------- */
 
 .badge,
 .badge--md {
@@ -98,6 +100,15 @@ body {
   --badge-font-size: var(--font-size-sm);
   --badge-line-height: var(--line-height-sm);
 }
+
+.badge,
+.badge--neutral {
+  --badge-background-color: var(--color-neutral-50);
+  --badge-border-color: var(--color-neutral-200);
+  --badge-color: var(--color-neutral-700);
+}
+
+/* --- Sizes ----------------------------------------------- */
 
 .badge--sm {
   --badge-padding-y: var(--spacing-2xs);
@@ -113,14 +124,7 @@ body {
   --badge-line-height: var(--line-height-md);
 }
 
-/* --- Colors (neutral is the default) --------------------- */
-
-.badge,
-.badge--neutral {
-  --badge-background-color: var(--color-neutral-50);
-  --badge-border-color: var(--color-neutral-200);
-  --badge-color: var(--color-neutral-700);
-}
+/* --- Colors ---------------------------------------------- */
 
 .badge--danger {
   --badge-background-color: var(--color-red-50);
@@ -152,16 +156,19 @@ body {
 
 .container {
   display: flex;
-  align-items: center;
-  justify-content: center;
   min-height: 100vh;
-  padding: var(--spacing-2xl);
+  min-height: 100dvh;
+  padding: var(--spacing-lg);
 }
 
+/* Auto margins centre the grid but collapse to 0 once the
+   content outgrows the viewport, so nothing is ever pushed
+   out of reach above the scroll origin. */
 .badge-grid {
   display: flex;
   flex-direction: column;
   gap: var(--spacing-lg);
+  margin: auto;
 }
 
 .badge-grid__row {
